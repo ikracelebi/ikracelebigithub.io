@@ -111,10 +111,12 @@ if (loginFormElement) {
         if (user) {
             // Set current user
             localStorage.setItem('currentUser', JSON.stringify(user));
-            alert('Giriş başarılı!');
+            const currentLang = document.documentElement.lang || 'tr';
+            alert(currentLang === 'tr' ? 'Giriş başarılı!' : 'Login successful!');
             window.location.href = 'index.html';
         } else {
-            alert('Kullanıcı adı veya şifre hatalı!');
+            const currentLang = document.documentElement.lang || 'tr';
+            alert(currentLang === 'tr' ? 'Kullanıcı adı veya şifre hatalı!' : 'Username or password incorrect!');
         }
     });
 }

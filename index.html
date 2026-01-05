@@ -67,15 +67,15 @@
                         <button class="membership-icon" id="profileIcon">👩</button>
                         <div class="profile-dropdown" id="profileDropdown">
                             <div id="profileMenuNotLoggedIn" style="display: none;">
-                                <a href="uyelik.html" class="profile-menu-item">Giriş Yap</a>
+                                <a href="uyelik.html" class="profile-menu-item" data-tr="Giriş Yap" data-en="Login">Giriş Yap</a>
                             </div>
                             <div id="profileMenuLoggedIn" style="display: none;">
-                                <a href="#" class="profile-menu-item" onclick="showProfileModal('settings')">Profil Ayarları</a>
-                                <a href="#" class="profile-menu-item" onclick="showProfileModal('contact')">İletişim</a>
-                                <a href="#" class="profile-menu-item" onclick="showProfileModal('preferences')">Tercihler</a>
-                                <a href="#" class="profile-menu-item" onclick="showProfileModal('shipping')">Kargodaki Ürünler</a>
-                                <a href="#" class="profile-menu-item" onclick="showProfileModal('returns')">İade Ürünler</a>
-                                <a href="#" class="profile-menu-item" onclick="logout()">Çıkış Yap</a>
+                                <a href="#" class="profile-menu-item" onclick="showProfileModal('settings')" data-tr="Profil Ayarları" data-en="Profile Settings">Profil Ayarları</a>
+                                <a href="#" class="profile-menu-item" onclick="showProfileModal('contact')" data-tr="İletişim" data-en="Contact">İletişim</a>
+                                <a href="#" class="profile-menu-item" onclick="showProfileModal('preferences')" data-tr="Tercihler" data-en="Preferences">Tercihler</a>
+                                <a href="#" class="profile-menu-item" onclick="showProfileModal('shipping')" data-tr="Kargodaki Ürünler" data-en="Shipping Products">Kargodaki Ürünler</a>
+                                <a href="#" class="profile-menu-item" onclick="showProfileModal('returns')" data-tr="İade Ürünler" data-en="Returned Products">İade Ürünler</a>
+                                <a href="#" class="profile-menu-item" onclick="logout()" data-tr="Çıkış Yap" data-en="Logout">Çıkış Yap</a>
                             </div>
                         </div>
                     </div>
@@ -116,54 +116,96 @@
         <div class="container">
             <h2 class="section-title" data-tr="Öne Çıkan Ürünler" data-en="Featured Products">Öne Çıkan Ürünler</h2>
             <div class="product-grid">
-                <div class="product-card">
-                    <div class="product-image" style="background-image: url('https://picsum.photos/400/400?random=101'); background-size: cover; background-position: center;"></div>
-                    <div class="product-info">
-                        <h3 data-tr="Mat Ruj Koleksiyonu" data-en="Matte Lipstick Collection">Mat Ruj Koleksiyonu</h3>
-                        <p class="product-desc" data-tr="Uzun süre kalıcı, mat finish" data-en="Long-lasting, matte finish">Uzun süre kalıcı, mat finish</p>
-                        <span class="product-price">₺149,90</span>
+                <a href="kategoriler.html?category=ruj" class="product-card-link">
+                    <div class="product-card">
+                        <div class="product-image" style="background-image: url('images/ruj-kirmizi.jpeg');"></div>
+                        <div class="product-info">
+                            <h3 data-tr="Mat Ruj Koleksiyonu" data-en="Matte Lipstick Collection">Mat Ruj Koleksiyonu</h3>
+                            <p class="product-desc" data-tr="Uzun süre kalıcı, mat finish" data-en="Long-lasting, matte finish">Uzun süre kalıcı, mat finish</p>
+                            <span class="product-price">₺149,90</span>
+                        </div>
                     </div>
-                </div>
-                <div class="product-card">
-                    <div class="product-image" style="background-image: url('https://picsum.photos/400/400?random=102'); background-size: cover; background-position: center;"></div>
-                    <div class="product-info">
-                        <h3 data-tr="Premium Maskara" data-en="Premium Mascara">Premium Maskara</h3>
-                        <p class="product-desc" data-tr="Kirpikleri uzatan formül" data-en="Lash-lengthening formula">Kirpikleri uzatan formül</p>
-                        <span class="product-price">₺89,90</span>
+                </a>
+                <a href="kategoriler.html?category=maskara" class="product-card-link">
+                    <div class="product-card">
+                        <div class="product-image" style="background-image: url('images/maskara-premium.png');"></div>
+                        <div class="product-info">
+                            <h3 data-tr="Premium Maskara" data-en="Premium Mascara">Premium Maskara</h3>
+                            <p class="product-desc" data-tr="Kirpikleri uzatan formül" data-en="Lash-lengthening formula">Kirpikleri uzatan formül</p>
+                            <span class="product-price">₺89,90</span>
+                        </div>
                     </div>
-                </div>
-                <div class="product-card">
-                    <div class="product-image" style="background-image: url('https://picsum.photos/400/400?random=103'); background-size: cover; background-position: center;"></div>
-                    <div class="product-info">
-                        <h3 data-tr="Doğal Fondöten" data-en="Natural Foundation">Doğal Fondöten</h3>
-                        <p class="product-desc" data-tr="Hafif ve doğal görünüm" data-en="Light and natural look">Hafif ve doğal görünüm</p>
-                        <span class="product-price">₺179,90</span>
+                </a>
+                <a href="kategoriler.html?category=fondoten" class="product-card-link">
+                    <div class="product-card">
+                        <div class="product-image" style="background-image: url('images/fondoten-dogal-acik.jpeg');"></div>
+                        <div class="product-info">
+                            <h3 data-tr="Doğal Fondöten" data-en="Natural Foundation">Doğal Fondöten</h3>
+                            <p class="product-desc" data-tr="Hafif ve doğal görünüm" data-en="Light and natural look">Hafif ve doğal görünüm</p>
+                            <span class="product-price">₺179,90</span>
+                        </div>
                     </div>
-                </div>
-                <div class="product-card">
-                    <div class="product-image" style="background-image: url('https://picsum.photos/400/400?random=104'); background-size: cover; background-position: center;"></div>
-                    <div class="product-info">
-                        <h3 data-tr="Göz Paleti" data-en="Eye Palette">Göz Paleti</h3>
-                        <p class="product-desc" data-tr="12 renkli premium palet" data-en="12-color premium palette">12 renkli premium palet</p>
-                        <span class="product-price">₺249,90</span>
+                </a>
+                <a href="kategoriler.html?category=palet" class="product-card-link">
+                    <div class="product-card">
+                        <div class="product-image" style="background-image: url('images/palet-12-renk.jpeg');"></div>
+                        <div class="product-info">
+                            <h3 data-tr="Göz Paleti" data-en="Eye Palette">Göz Paleti</h3>
+                            <p class="product-desc" data-tr="12 renkli premium palet" data-en="12-color premium palette">12 renkli premium palet</p>
+                            <span class="product-price">₺249,90</span>
+                        </div>
                     </div>
-                </div>
-                <div class="product-card">
-                    <div class="product-image" style="background-image: url('https://picsum.photos/400/400?random=105'); background-size: cover; background-position: center;"></div>
-                    <div class="product-info">
-                        <h3 data-tr="Allık Seti" data-en="Blush Set">Allık Seti</h3>
-                        <p class="product-desc" data-tr="Doğal görünümlü allık" data-en="Natural-looking blush">Doğal görünümlü allık</p>
-                        <span class="product-price">₺119,90</span>
+                </a>
+                <a href="kategoriler.html?category=allik" class="product-card-link">
+                    <div class="product-card">
+                        <div class="product-image" style="background-image: url('images/allik-pembe.png');"></div>
+                        <div class="product-info">
+                            <h3 data-tr="Allık Seti" data-en="Blush Set">Allık Seti</h3>
+                            <p class="product-desc" data-tr="Doğal görünümlü allık" data-en="Natural-looking blush">Doğal görünümlü allık</p>
+                            <span class="product-price">₺119,90</span>
+                        </div>
                     </div>
-                </div>
-                <div class="product-card">
-                    <div class="product-image" style="background-image: url('https://picsum.photos/400/400?random=106'); background-size: cover; background-position: center;"></div>
-                    <div class="product-info">
-                        <h3 data-tr="Göz Kalemi" data-en="Eyeliner">Göz Kalemi</h3>
-                        <p class="product-desc" data-tr="Su geçirmez formül" data-en="Waterproof formula">Su geçirmez formül</p>
-                        <span class="product-price">₺69,90</span>
+                </a>
+                <a href="kategoriler.html?category=goz" class="product-card-link">
+                    <div class="product-card">
+                        <div class="product-image" style="background-image: url('images/goz-kalemi-siyah.jpeg');"></div>
+                        <div class="product-info">
+                            <h3 data-tr="Göz Kalemi" data-en="Eyeliner">Göz Kalemi</h3>
+                            <p class="product-desc" data-tr="Su geçirmez formül" data-en="Waterproof formula">Su geçirmez formül</p>
+                            <span class="product-price">₺69,90</span>
+                        </div>
                     </div>
-                </div>
+                </a>
+                <a href="kategoriler.html?category=bakim" class="product-card-link">
+                    <div class="product-card">
+                        <div class="product-image" style="background-image: url('images/cilt-bakim-kremi.jpeg');"></div>
+                        <div class="product-info">
+                            <h3 data-tr="Cilt Bakım Kremi" data-en="Facial Care Cream">Cilt Bakım Kremi</h3>
+                            <p class="product-desc" data-tr="Nemlendirici ve besleyici formül" data-en="Moisturizing and nourishing formula">Nemlendirici ve besleyici formül</p>
+                            <span class="product-price">₺199,90</span>
+                        </div>
+                    </div>
+                </a>
+                <a href="kategoriler.html?category=kapatıcı" class="product-card-link">
+                    <div class="product-card">
+                        <div class="product-image" style="background-image: url('images/kapatici-krem-acik.jpeg');"></div>
+                        <div class="product-info">
+                            <h3 data-tr="Kapatıcı" data-en="Concealer">Kapatıcı</h3>
+                            <p class="product-desc" data-tr="Yüksek kapatıcılık, doğal görünüm" data-en="High coverage, natural look">Yüksek kapatıcılık, doğal görünüm</p>
+                            <span class="product-price">₺89,90</span>
+                        </div>
+                    </div>
+                </a>
+                <a href="kategoriler.html?category=highlighter" class="product-card-link">
+                    <div class="product-card">
+                        <div class="product-image" style="background-image: url('images/highlighter-rose-gold.png');"></div>
+                        <div class="product-info">
+                            <h3 data-tr="Highlighter" data-en="Highlighter">Highlighter</h3>
+                            <p class="product-desc" data-tr="Işıltılı ve parlak görünüm" data-en="Shimmering and radiant look">Işıltılı ve parlak görünüm</p>
+                            <span class="product-price">₺139,90</span>
+                        </div>
+                    </div>
+                </a>
             </div>
         </div>
     </section>

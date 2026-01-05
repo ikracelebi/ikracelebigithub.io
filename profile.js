@@ -64,38 +64,54 @@ window.showProfileModal = function(section) {
         profileDropdown.classList.remove('active');
     }
     
+    // Get current language
+    const currentLang = document.documentElement.lang || 'tr';
+    
     // Set title and content based on section
     let title = 'Profil';
+    let titleEn = 'Profile';
     let content = '';
     
     switch(section) {
         case 'settings':
             title = 'Profil Ayarları';
+            titleEn = 'Profile Settings';
             content = getProfileSettingsContent();
             break;
         case 'contact':
             title = 'İletişim Bilgileri';
+            titleEn = 'Contact Information';
             content = getContactContent();
             break;
         case 'preferences':
             title = 'Tercihler';
+            titleEn = 'Preferences';
             content = getPreferencesContent();
             break;
         case 'shipping':
             title = 'Kargodaki Ürünler';
+            titleEn = 'Shipping Products';
             content = getShippingContent();
             break;
         case 'returns':
             title = 'İade Ürünler';
+            titleEn = 'Returned Products';
             content = getReturnsContent();
             break;
         default:
             content = getDefaultProfileContent();
     }
     
-    modalTitle.textContent = title;
+    modalTitle.setAttribute('data-tr', title);
+    modalTitle.setAttribute('data-en', titleEn);
+    modalTitle.textContent = currentLang === 'tr' ? title : titleEn;
     modalBody.innerHTML = content;
     modal.classList.add('active');
+    
+    // Update language for modal content
+    if (typeof updateLanguage === 'function') {
+        updateLanguage(currentLang);
+    }
     
     // Attach event listeners for forms
     attachProfileFormListeners(section);
@@ -104,29 +120,30 @@ window.showProfileModal = function(section) {
 // Get profile settings content
 function getProfileSettingsContent() {
     const currentUser = JSON.parse(localStorage.getItem('currentUser')) || {};
+    const currentLang = document.documentElement.lang || 'tr';
     return `
         <form id="profileSettingsForm">
             <div class="profile-form-group">
-                <label>Kullanıcı Adı</label>
+                <label data-tr="Kullanıcı Adı" data-en="Username">Kullanıcı Adı</label>
                 <input type="text" id="profileUsername" value="${currentUser.username || ''}" readonly>
             </div>
             <div class="profile-form-group">
-                <label>Ad Soyad</label>
+                <label data-tr="Ad Soyad" data-en="Full Name">Ad Soyad</label>
                 <input type="text" id="profileName" value="${currentUser.name || ''}">
             </div>
             <div class="profile-form-group">
-                <label>E-posta</label>
+                <label data-tr="E-posta" data-en="Email">E-posta</label>
                 <input type="email" id="profileEmail" value="${currentUser.email || ''}">
             </div>
             <div class="profile-form-group">
-                <label>Telefon</label>
+                <label data-tr="Telefon" data-en="Phone">Telefon</label>
                 <input type="tel" id="profilePhone" value="${currentUser.phone || ''}" placeholder="05XX XXX XX XX">
             </div>
             <div class="profile-form-group">
-                <label>Doğum Tarihi</label>
+                <label data-tr="Doğum Tarihi" data-en="Birth Date">Doğum Tarihi</label>
                 <input type="date" id="profileBirthdate" value="${currentUser.birthdate || ''}">
             </div>
-            <button type="submit" class="profile-save-btn">Kaydet</button>
+            <button type="submit" class="profile-save-btn" data-tr="Kaydet" data-en="Save">Kaydet</button>
         </form>
     `;
 }
@@ -135,55 +152,59 @@ function getProfileSettingsContent() {
 function getContactContent() {
     const currentUser = JSON.parse(localStorage.getItem('currentUser')) || {};
     const addresses = JSON.parse(localStorage.getItem('userAddresses')) || [];
+    const currentLang = document.documentElement.lang || 'tr';
     
     let addressesHtml = '';
     if (addresses.length === 0) {
-        addressesHtml = '<p class="profile-empty">Henüz adres eklenmemiş.</p>';
+        addressesHtml = '<p class="profile-empty" data-tr="Henüz adres eklenmemiş." data-en="No addresses added yet.">Henüz adres eklenmemiş.</p>';
     } else {
-        addressesHtml = addresses.map((addr, index) => `
+        addressesHtml = addresses.map((addr, index) => {
+            const addressTitle = addr.title || (currentLang === 'tr' ? 'Adres ' + (index + 1) : 'Address ' + (index + 1));
+            return `
             <div class="address-item">
-                <h4>${addr.title || 'Adres ' + (index + 1)}</h4>
+                <h4>${addressTitle}</h4>
                 <p>${addr.address}</p>
                 <p>${addr.city}, ${addr.district}</p>
                 <p>${addr.postalCode}</p>
-                <button onclick="deleteAddress(${index})" class="address-delete-btn">Sil</button>
+                <button onclick="deleteAddress(${index})" class="address-delete-btn" data-tr="Sil" data-en="Delete">Sil</button>
             </div>
-        `).join('');
+        `;
+        }).join('');
     }
     
     return `
         <div class="contact-section">
-            <h3>Adreslerim</h3>
+            <h3 data-tr="Adreslerim" data-en="My Addresses">Adreslerim</h3>
             <div class="addresses-list">
                 ${addressesHtml}
             </div>
-            <button onclick="showAddAddressForm()" class="profile-add-btn">Yeni Adres Ekle</button>
+            <button onclick="showAddAddressForm()" class="profile-add-btn" data-tr="Yeni Adres Ekle" data-en="Add New Address">Yeni Adres Ekle</button>
             
             <div id="addAddressForm" style="display: none; margin-top: 1.5rem;">
-                <h3>Yeni Adres Ekle</h3>
+                <h3 data-tr="Yeni Adres Ekle" data-en="Add New Address">Yeni Adres Ekle</h3>
                 <form id="newAddressForm">
                     <div class="profile-form-group">
-                        <label>Adres Başlığı</label>
-                        <input type="text" id="addressTitle" placeholder="Ev, İş, vb." required>
+                        <label data-tr="Adres Başlığı" data-en="Address Title">Adres Başlığı</label>
+                        <input type="text" id="addressTitle" placeholder="${currentLang === 'tr' ? 'Ev, İş, vb.' : 'Home, Work, etc.'}" required>
                     </div>
                     <div class="profile-form-group">
-                        <label>Adres</label>
+                        <label data-tr="Adres" data-en="Address">Adres</label>
                         <textarea id="addressText" rows="3" required></textarea>
                     </div>
                     <div class="profile-form-group">
-                        <label>İl</label>
+                        <label data-tr="İl" data-en="City">İl</label>
                         <input type="text" id="addressCity" required>
                     </div>
                     <div class="profile-form-group">
-                        <label>İlçe</label>
+                        <label data-tr="İlçe" data-en="District">İlçe</label>
                         <input type="text" id="addressDistrict" required>
                     </div>
                     <div class="profile-form-group">
-                        <label>Posta Kodu</label>
+                        <label data-tr="Posta Kodu" data-en="Postal Code">Posta Kodu</label>
                         <input type="text" id="addressPostalCode" required>
                     </div>
-                    <button type="submit" class="profile-save-btn">Adresi Kaydet</button>
-                    <button type="button" onclick="hideAddAddressForm()" class="profile-cancel-btn">İptal</button>
+                    <button type="submit" class="profile-save-btn" data-tr="Adresi Kaydet" data-en="Save Address">Adresi Kaydet</button>
+                    <button type="button" onclick="hideAddAddressForm()" class="profile-cancel-btn" data-tr="İptal" data-en="Cancel">İptal</button>
                 </form>
             </div>
         </div>
@@ -237,7 +258,7 @@ function getShippingContent() {
     const shippingOrders = orders.filter(order => order.status === 'shipping' || order.status === 'processing');
     
     if (shippingOrders.length === 0) {
-        return '<p class="profile-empty">Kargodaki ürün bulunmamaktadır.</p>';
+        return '<p class="profile-empty" data-tr="Kargodaki ürün bulunmamaktadır." data-en="No products in shipping.">Kargodaki ürün bulunmamaktadır.</p>';
     }
     
     return `
@@ -245,10 +266,10 @@ function getShippingContent() {
             ${shippingOrders.map(order => `
                 <div class="order-item">
                     <div class="order-header">
-                        <h4>Sipariş #${order.orderId || order.id}</h4>
+                        <h4 data-tr="Sipariş #" data-en="Order #">Sipariş #${order.orderId || order.id}</h4>
                         <span class="order-status ${order.status}">${getOrderStatusText(order.status)}</span>
                     </div>
-                    <div class="order-date">Sipariş Tarihi: ${formatDate(order.date)}</div>
+                    <div class="order-date" data-tr="Sipariş Tarihi: " data-en="Order Date: ">Sipariş Tarihi: ${formatDate(order.date)}</div>
                     <div class="order-items">
                         ${order.items.map(item => `
                             <div class="order-item-product">
@@ -257,8 +278,8 @@ function getShippingContent() {
                             </div>
                         `).join('')}
                     </div>
-                    <div class="order-total">Toplam: ${order.total}</div>
-                    ${order.trackingNumber ? `<div class="order-tracking">Kargo Takip No: ${order.trackingNumber}</div>` : ''}
+                    <div class="order-total" data-tr="Toplam: " data-en="Total: ">Toplam: ${order.total}</div>
+                    ${order.trackingNumber ? `<div class="order-tracking" data-tr="Kargo Takip No: " data-en="Tracking Number: ">Kargo Takip No: ${order.trackingNumber}</div>` : ''}
                 </div>
             `).join('')}
         </div>
@@ -271,7 +292,7 @@ function getReturnsContent() {
     const returnOrders = orders.filter(order => order.status === 'returned' || order.returnRequested);
     
     if (returnOrders.length === 0) {
-        return '<p class="profile-empty">İade ürün bulunmamaktadır.</p>';
+        return '<p class="profile-empty" data-tr="İade ürün bulunmamaktadır." data-en="No returned products.">İade ürün bulunmamaktadır.</p>';
     }
     
     return `
@@ -279,10 +300,10 @@ function getReturnsContent() {
             ${returnOrders.map(order => `
                 <div class="order-item">
                     <div class="order-header">
-                        <h4>Sipariş #${order.orderId || order.id}</h4>
-                        <span class="order-status returned">İade</span>
+                        <h4 data-tr="Sipariş #" data-en="Order #">Sipariş #${order.orderId || order.id}</h4>
+                        <span class="order-status returned" data-tr="İade" data-en="Returned">İade</span>
                     </div>
-                    <div class="order-date">İade Tarihi: ${formatDate(order.returnDate || order.date)}</div>
+                    <div class="order-date" data-tr="İade Tarihi: " data-en="Return Date: ">İade Tarihi: ${formatDate(order.returnDate || order.date)}</div>
                     <div class="order-items">
                         ${order.items.map(item => `
                             <div class="order-item-product">
@@ -291,7 +312,7 @@ function getReturnsContent() {
                             </div>
                         `).join('')}
                     </div>
-                    <div class="order-total">İade Tutarı: ${order.total}</div>
+                    <div class="order-total" data-tr="İade Tutarı: " data-en="Return Amount: ">İade Tutarı: ${order.total}</div>
                 </div>
             `).join('')}
         </div>
@@ -347,12 +368,14 @@ function saveProfileSettings() {
     currentUser.birthdate = document.getElementById('profileBirthdate').value;
     
     localStorage.setItem('currentUser', JSON.stringify(currentUser));
-    alert('Profil bilgileri kaydedildi!');
+    const currentLang = document.documentElement.lang || 'tr';
+    alert(currentLang === 'tr' ? 'Profil bilgileri kaydedildi!' : 'Profile information saved!');
 }
 
 // Save new address
 window.saveNewAddress = function() {
     const addresses = JSON.parse(localStorage.getItem('userAddresses')) || [];
+    const currentLang = document.documentElement.lang || 'tr';
     const newAddress = {
         title: document.getElementById('addressTitle').value,
         address: document.getElementById('addressText').value,
@@ -363,13 +386,17 @@ window.saveNewAddress = function() {
     
     addresses.push(newAddress);
     localStorage.setItem('userAddresses', JSON.stringify(addresses));
-    alert('Adres eklendi!');
+    alert(currentLang === 'tr' ? 'Adres eklendi!' : 'Address added!');
     showProfileModal('contact');
 };
 
 // Delete address
 window.deleteAddress = function(index) {
-    if (confirm('Bu adresi silmek istediğinize emin misiniz?')) {
+    const currentLang = document.documentElement.lang || 'tr';
+    const confirmMsg = currentLang === 'tr' 
+        ? 'Bu adresi silmek istediğinize emin misiniz?'
+        : 'Are you sure you want to delete this address?';
+    if (confirm(confirmMsg)) {
         const addresses = JSON.parse(localStorage.getItem('userAddresses')) || [];
         addresses.splice(index, 1);
         localStorage.setItem('userAddresses', JSON.stringify(addresses));
@@ -391,6 +418,7 @@ window.hideAddAddressForm = function() {
 
 // Save preferences
 function savePreferences() {
+    const currentLang = document.documentElement.lang || 'tr';
     const preferences = {
         newsletter: document.getElementById('prefNewsletter').checked,
         smsNotifications: document.getElementById('prefSMS').checked,
@@ -399,7 +427,7 @@ function savePreferences() {
     };
     
     localStorage.setItem('userPreferences', JSON.stringify(preferences));
-    alert('Tercihler kaydedildi!');
+    alert(currentLang === 'tr' ? 'Tercihler kaydedildi!' : 'Preferences saved!');
 }
 
 // Close profile modal
@@ -423,11 +451,17 @@ document.addEventListener('click', (e) => {
 
 // Logout
 window.logout = function() {
-    if (confirm('Çıkış yapmak istediğinize emin misiniz?')) {
+    const currentLang = document.documentElement.lang || 'tr';
+    const confirmMsg = currentLang === 'tr' 
+        ? 'Çıkış yapmak istediğinize emin misiniz?'
+        : 'Are you sure you want to logout?';
+    const successMsg = currentLang === 'tr' ? 'Çıkış yapıldı!' : 'Logged out!';
+    
+    if (confirm(confirmMsg)) {
         localStorage.removeItem('currentUser');
         updateProfileMenu();
         if (profileDropdown) profileDropdown.classList.remove('active');
-        alert('Çıkış yapıldı!');
+        alert(successMsg);
         window.location.reload();
     }
 };

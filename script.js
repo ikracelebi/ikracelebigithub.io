@@ -31,7 +31,7 @@ document.addEventListener('click', (e) => {
 const langIcon = document.getElementById('langIcon');
 const langDropdown = document.getElementById('langDropdown');
 const langOptions = document.querySelectorAll('.lang-option');
-let currentLang = 'tr';
+let currentLang = localStorage.getItem('currentLang') || document.documentElement.lang || 'tr';
 
 if (langIcon && langDropdown) {
     langIcon.addEventListener('click', (e) => {
@@ -65,6 +65,9 @@ if (langIcon && langDropdown) {
 }
 
 function updateLanguage(lang) {
+    // Save language to localStorage
+    localStorage.setItem('currentLang', lang);
+    
     const elements = document.querySelectorAll('[data-tr]');
     elements.forEach(el => {
         if (lang === 'tr') {
@@ -84,6 +87,16 @@ function updateLanguage(lang) {
     
     // Update HTML lang attribute
     document.documentElement.lang = lang;
+    
+    // Update products display if renderProducts function exists
+    if (typeof renderProducts === 'function') {
+        renderProducts();
+    }
+    
+    // Update cart display if updateCartDisplay function exists
+    if (typeof updateCartDisplay === 'function') {
+        updateCartDisplay();
+    }
 }
 
 // Cart Icon
@@ -156,5 +169,18 @@ if (glitterContainer) {
     setTimeout(() => {
         createGlitter(glitterContainer, 18);
     }, 3500);
+}
+
+// Initialize language on page load
+if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', () => {
+        if (currentLang) {
+            updateLanguage(currentLang);
+        }
+    });
+} else {
+    if (currentLang) {
+        updateLanguage(currentLang);
+    }
 }
 

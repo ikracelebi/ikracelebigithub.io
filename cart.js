@@ -1,6 +1,35 @@
 // Cart functionality
 let cart = JSON.parse(localStorage.getItem('cart')) || [];
 
+// Get current language
+function getCurrentLanguage() {
+    // Check if currentLang is defined in script.js scope
+    if (typeof currentLang !== 'undefined') {
+        return currentLang;
+    }
+    // Check localStorage
+    const savedLang = localStorage.getItem('currentLang');
+    if (savedLang) {
+        return savedLang;
+    }
+    // Check HTML lang attribute
+    const htmlLang = document.documentElement.lang;
+    if (htmlLang) {
+        return htmlLang;
+    }
+    // Default to Turkish
+    return 'tr';
+}
+
+// Get product name based on current language
+function getCartItemName(item) {
+    const lang = getCurrentLanguage();
+    if (lang === 'en' && item.nameEn) {
+        return item.nameEn;
+    }
+    return item.nameTr || item.name || (lang === 'en' ? 'Product' : 'Ürün');
+}
+
 // Update cart display
 function updateCartDisplay() {
     const cartItems = document.getElementById('cartItems');
@@ -55,14 +84,16 @@ function updateCartDisplay() {
         total += price * quantity;
         
         const priceDisplay = typeof item.price === 'string' ? item.price : `₺${item.price.toFixed(2).replace('.', ',')}`;
+        const itemName = getCartItemName(item);
+        const removeLabel = getCurrentLanguage() === 'en' ? 'Remove product' : 'Ürünü kaldır';
         
         cartItem.innerHTML = `
             <div class="cart-item-image" style="background-image: url('${item.image || ''}'); background-size: cover; background-position: center;"></div>
             <div class="cart-item-info">
-                <h4>${item.name || 'Ürün'}</h4>
+                <h4>${itemName}</h4>
                 <p>${priceDisplay} x ${quantity}</p>
             </div>
-            <button class="cart-item-remove" onclick="removeFromCart(${index})" aria-label="Ürünü kaldır">&times;</button>
+            <button class="cart-item-remove" onclick="removeFromCart(${index})" aria-label="${removeLabel}">&times;</button>
         `;
         
         cartItems.appendChild(cartItem);
@@ -90,7 +121,8 @@ function addToCart(product) {
     updateCartDisplay();
     
     // Show notification
-    showCartNotification(product.name);
+    const productName = getCartItemName(product);
+    showCartNotification(productName);
 }
 
 // Show cart notification
@@ -102,12 +134,14 @@ function showCartNotification(productName) {
     }
     
     // Create notification
+    const lang = getCurrentLanguage();
+    const addedText = lang === 'en' ? 'added to cart!' : 'sepete eklendi!';
     const notification = document.createElement('div');
     notification.className = 'cart-notification';
     notification.innerHTML = `
         <div class="cart-notification-content">
             <span>✓</span>
-            <span>${productName} sepete eklendi!</span>
+            <span>${productName} ${addedText}</span>
         </div>
     `;
     
@@ -155,22 +189,23 @@ document.addEventListener('click', (e) => {
         e.preventDefault();
         const btn = e.target.classList.contains('checkout-btn') ? e.target : e.target.closest('.checkout-btn');
         
-        // Check if user is logged in
-        const currentUser = JSON.parse(localStorage.getItem('currentUser'));
-        if (!currentUser) {
-            alert('Ödeme yapmak için lütfen giriş yapın!');
-            window.location.href = 'uyelik.html';
-            return;
-        }
-        
-        // Reload cart from localStorage
-        cart = JSON.parse(localStorage.getItem('cart')) || [];
-        
-        // Check if cart is empty
-        if (cart.length === 0) {
-            alert('Sepetiniz boş!');
-            return;
-        }
+            // Check if user is logged in
+            const currentUser = JSON.parse(localStorage.getItem('currentUser'));
+            const currentLang = document.documentElement.lang || 'tr';
+            if (!currentUser) {
+                alert(currentLang === 'tr' ? 'Ödeme yapmak için lütfen giriş yapın!' : 'Please login to checkout!');
+                window.location.href = 'uyelik.html';
+                return;
+            }
+            
+            // Reload cart from localStorage
+            cart = JSON.parse(localStorage.getItem('cart')) || [];
+            
+            // Check if cart is empty
+            if (cart.length === 0) {
+                alert(currentLang === 'tr' ? 'Sepetiniz boş!' : 'Your cart is empty!');
+                return;
+            }
         
         // Show payment modal
         showPaymentModal();
@@ -209,50 +244,53 @@ function showPaymentModal() {
         });
     }
     
+    // Get current language
+    const currentLang = document.documentElement.lang || 'tr';
+    
     // Update modal content
     modal.innerHTML = `
         <div class="payment-modal-content">
             <div class="payment-modal-header">
-                <h2>Ödeme</h2>
+                <h2 data-tr="Ödeme" data-en="Payment">Ödeme</h2>
                 <button class="payment-modal-close" onclick="closePaymentModal()">&times;</button>
             </div>
             
             <div class="payment-summary">
                 <div class="payment-summary-item">
-                    <span>Ara Toplam:</span>
+                    <span data-tr="Ara Toplam:" data-en="Subtotal:">Ara Toplam:</span>
                     <span>₺${total.toFixed(2).replace('.', ',')}</span>
                 </div>
                 <div class="payment-summary-item">
-                    <span>Kargo:</span>
-                    <span>Ücretsiz</span>
+                    <span data-tr="Kargo:" data-en="Shipping:">Kargo:</span>
+                    <span data-tr="Ücretsiz" data-en="Free">Ücretsiz</span>
                 </div>
                 <div class="payment-summary-item">
-                    <span>Toplam:</span>
+                    <span data-tr="Toplam:" data-en="Total:">Toplam:</span>
                     <span>₺${total.toFixed(2).replace('.', ',')}</span>
                 </div>
             </div>
             
             <form id="paymentForm">
                 <div class="payment-methods">
-                    <h3>Ödeme Yöntemi</h3>
+                    <h3 data-tr="Ödeme Yöntemi" data-en="Payment Method">Ödeme Yöntemi</h3>
                     <div class="payment-method-option">
                         <input type="radio" id="paymentCard" name="paymentMethod" value="card" checked>
-                        <label for="paymentCard">Kredi/Banka Kartı</label>
+                        <label for="paymentCard" data-tr="Kredi/Banka Kartı" data-en="Credit/Debit Card">Kredi/Banka Kartı</label>
                     </div>
                     <div class="payment-method-option">
                         <input type="radio" id="paymentCash" name="paymentMethod" value="cash">
-                        <label for="paymentCash">Kapıda Ödeme</label>
+                        <label for="paymentCash" data-tr="Kapıda Ödeme" data-en="Cash on Delivery">Kapıda Ödeme</label>
                     </div>
                 </div>
                 
                 <div id="cardPaymentFields">
                     <div class="payment-form-group">
-                        <label>Kart Numarası</label>
+                        <label data-tr="Kart Numarası" data-en="Card Number">Kart Numarası</label>
                         <input type="text" id="cardNumber" placeholder="1234 5678 9012 3456" maxlength="19" required>
                     </div>
                     <div class="payment-form-row">
                         <div class="payment-form-group">
-                            <label>Son Kullanma Tarihi</label>
+                            <label data-tr="Son Kullanma Tarihi" data-en="Expiry Date">Son Kullanma Tarihi</label>
                             <input type="text" id="cardExpiry" placeholder="MM/YY" maxlength="5" required>
                         </div>
                         <div class="payment-form-group">
@@ -261,15 +299,20 @@ function showPaymentModal() {
                         </div>
                     </div>
                     <div class="payment-form-group">
-                        <label>Kart Sahibi Adı</label>
-                        <input type="text" id="cardName" placeholder="Ad Soyad" required>
+                        <label data-tr="Kart Sahibi Adı" data-en="Cardholder Name">Kart Sahibi Adı</label>
+                        <input type="text" id="cardName" placeholder="${currentLang === 'tr' ? 'Ad Soyad' : 'Full Name'}" required>
                     </div>
                 </div>
                 
-                <button type="submit" class="payment-submit-btn">Ödemeyi Tamamla</button>
+                <button type="submit" class="payment-submit-btn" data-tr="Ödemeyi Tamamla" data-en="Complete Payment">Ödemeyi Tamamla</button>
             </form>
         </div>
     `;
+    
+    // Update language for payment modal
+    if (typeof updateLanguage === 'function') {
+        updateLanguage(currentLang);
+    }
     
     // Handle payment method change
     const paymentMethods = modal.querySelectorAll('input[name="paymentMethod"]');
@@ -340,6 +383,8 @@ window.closePaymentModal = function() {
 function processPayment() {
     const paymentMethod = document.querySelector('input[name="paymentMethod"]:checked').value;
     
+    const currentLang = document.documentElement.lang || 'tr';
+    
     if (paymentMethod === 'card') {
         const cardNumber = document.getElementById('cardNumber').value;
         const cardExpiry = document.getElementById('cardExpiry').value;
@@ -347,7 +392,7 @@ function processPayment() {
         const cardName = document.getElementById('cardName').value;
         
         if (!cardNumber || !cardExpiry || !cardCVV || !cardName) {
-            alert('Lütfen tüm kart bilgilerini doldurun!');
+            alert(currentLang === 'tr' ? 'Lütfen tüm kart bilgilerini doldurun!' : 'Please fill in all card information!');
             return;
         }
     }
@@ -355,7 +400,7 @@ function processPayment() {
     // Create order
     const currentUser = JSON.parse(localStorage.getItem('currentUser'));
     if (!currentUser) {
-        alert('Giriş yapmanız gerekiyor!');
+        alert(currentLang === 'tr' ? 'Giriş yapmanız gerekiyor!' : 'You need to login!');
         return;
     }
     
@@ -396,7 +441,10 @@ function processPayment() {
     localStorage.setItem('userOrders', JSON.stringify(orders));
     
     // Simulate payment processing
-    alert('Ödeme işlemi başarıyla tamamlandı! Siparişiniz alındı. Sipariş No: ' + order.orderId);
+    const successMsg = currentLang === 'tr' 
+        ? 'Ödeme işlemi başarıyla tamamlandı! Siparişiniz alındı. Sipariş No: ' + order.orderId
+        : 'Payment completed successfully! Your order has been received. Order No: ' + order.orderId;
+    alert(successMsg);
     
     // Clear cart
     cart = [];
