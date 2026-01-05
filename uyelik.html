@@ -1,0 +1,175 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Üyelik - Glow & Beauty</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;500;600;700&family=Cormorant+Garamond:wght@400;500;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <!-- Hamburger Menu -->
+    <button class="hamburger-menu" id="hamburgerMenu">
+        <span></span>
+        <span></span>
+        <span></span>
+    </button>
+
+    <!-- Sidebar Menu -->
+    <div class="sidebar-menu" id="sidebarMenu">
+        <div class="sidebar-header">
+            <h2>Glow & Beauty</h2>
+            <button class="close-menu" id="closeMenu">&times;</button>
+        </div>
+        <nav class="sidebar-nav">
+            <a href="index.html" data-tr="Anasayfa" data-en="Home">Anasayfa</a>
+            <a href="kategoriler.html" data-tr="Kategoriler" data-en="Categories">Kategoriler</a>
+            <a href="hakkimizda.html" data-tr="Hakkımızda" data-en="About">Hakkımızda</a>
+            <a href="iletisim.html" data-tr="İletişim" data-en="Contact">İletişim</a>
+        </nav>
+    </div>
+
+    <!-- Header -->
+    <header class="header">
+        <nav class="navbar">
+            <div class="container">
+                <div class="logo">
+                    <a href="index.html">
+                        <h1>Glow & Beauty</h1>
+                    </a>
+                </div>
+                <div class="nav-right">
+                    <div class="language-selector">
+                        <button class="lang-icon-btn" id="langIcon">🌐</button>
+                        <div class="lang-dropdown" id="langDropdown">
+                            <button class="lang-option active" data-lang="tr">TR</button>
+                            <button class="lang-option" data-lang="en">EN</button>
+                        </div>
+                    </div>
+                    <div class="cart-icon-wrapper">
+                        <button class="cart-icon" id="cartIcon">
+                            <span class="cart-count" id="cartCount">0</span>
+                        </button>
+                    </div>
+                    <div class="profile-wrapper">
+                        <button class="membership-icon" id="profileIcon">👩</button>
+                        <div class="profile-dropdown" id="profileDropdown">
+                            <div id="profileMenuNotLoggedIn" style="display: none;">
+                                <a href="uyelik.html" class="profile-menu-item">Giriş Yap</a>
+                            </div>
+                            <div id="profileMenuLoggedIn" style="display: none;">
+                                <a href="#" class="profile-menu-item" onclick="showProfileModal('settings')">Profil Ayarları</a>
+                                <a href="#" class="profile-menu-item" onclick="showProfileModal('contact')">İletişim</a>
+                                <a href="#" class="profile-menu-item" onclick="showProfileModal('preferences')">Tercihler</a>
+                                <a href="#" class="profile-menu-item" onclick="showProfileModal('shipping')">Kargodaki Ürünler</a>
+                                <a href="#" class="profile-menu-item" onclick="showProfileModal('returns')">İade Ürünler</a>
+                                <a href="#" class="profile-menu-item" onclick="logout()">Çıkış Yap</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </nav>
+    </header>
+
+    <!-- Cart Sidebar -->
+    <div class="cart-sidebar" id="cartSidebar">
+        <div class="cart-header">
+            <h3 data-tr="Sepetim" data-en="My Cart">Sepetim</h3>
+            <button class="close-cart" id="closeCart">&times;</button>
+        </div>
+        <div class="cart-items" id="cartItems">
+            <div class="empty-cart" data-tr="Sepetiniz boş" data-en="Your cart is empty">Sepetiniz boş</div>
+        </div>
+        <div class="cart-footer">
+            <div class="cart-total">
+                <span data-tr="Toplam" data-en="Total">Toplam:</span>
+                <span class="total-price" id="cartTotal">₺0,00</span>
+            </div>
+            <button class="checkout-btn" data-tr="Ödeme Yap" data-en="Checkout">Ödeme Yap</button>
+        </div>
+    </div>
+
+    <!-- Auth Page -->
+    <section class="auth-page">
+        <div class="container">
+            <div class="auth-container">
+                <div class="auth-tabs">
+                    <button class="auth-tab active" data-tab="login" data-tr="Giriş Yap" data-en="Login">Giriş Yap</button>
+                    <button class="auth-tab" data-tab="register" data-tr="Kayıt Ol" data-en="Register">Kayıt Ol</button>
+                </div>
+
+                <!-- Login Form -->
+                <div class="auth-form active" id="loginForm">
+                    <h2 data-tr="Giriş Yap" data-en="Login">Giriş Yap</h2>
+                    <form id="loginFormElement">
+                        <div class="form-group">
+                            <label data-tr="Kullanıcı Adı" data-en="Username">Kullanıcı Adı</label>
+                            <input type="text" id="loginEmail" required data-tr="Kullanıcı adınızı girin" data-en="Enter your username" placeholder="Kullanıcı adınızı girin">
+                        </div>
+                        <div class="form-group">
+                            <label data-tr="Şifre" data-en="Password">Şifre</label>
+                            <input type="password" id="loginPassword" required data-tr="Şifrenizi girin" data-en="Enter your password" placeholder="Şifrenizi girin">
+                        </div>
+                        <button type="submit" class="auth-btn" data-tr="Giriş Yap" data-en="Login">Giriş Yap</button>
+                    </form>
+                    <p class="auth-link" data-tr="Hesabınız yok mu? " data-en="Don't have an account? ">
+                        Hesabınız yok mu? <a href="#" id="switchToRegister" data-tr="Kayıt Ol" data-en="Register">Kayıt Ol</a>
+                    </p>
+                </div>
+
+                <!-- Register Form -->
+                <div class="auth-form" id="registerForm">
+                    <h2 data-tr="Kayıt Ol" data-en="Register">Kayıt Ol</h2>
+                    <form id="registerFormElement">
+                        <div class="form-group">
+                            <label data-tr="Ad Soyad" data-en="Full Name">Ad Soyad</label>
+                            <input type="text" id="registerName" required data-tr="Adınızı ve soyadınızı girin" data-en="Enter your full name">
+                        </div>
+                        <div class="form-group">
+                            <label data-tr="E-posta" data-en="Email">E-posta</label>
+                            <input type="email" id="registerEmail" required data-tr="E-posta adresinizi girin" data-en="Enter your email">
+                        </div>
+                        <div class="form-group">
+                            <label data-tr="Şifre" data-en="Password">Şifre</label>
+                            <input type="password" id="registerPassword" required data-tr="Şifrenizi girin" data-en="Enter your password">
+                        </div>
+                        <button type="submit" class="auth-btn" data-tr="Kayıt Ol" data-en="Register">Kayıt Ol</button>
+                    </form>
+                    <p class="auth-link" data-tr="Zaten hesabınız var mı? " data-en="Already have an account? ">
+                        Zaten hesabınız var mı? <a href="#" id="switchToLogin" data-tr="Giriş Yap" data-en="Login">Giriş Yap</a>
+                    </p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <p data-tr="&copy; 2024 Glow & Beauty. Tüm hakları saklıdır." data-en="&copy; 2024 Glow & Beauty. All rights reserved.">&copy; 2024 Glow & Beauty. Tüm hakları saklıdır.</p>
+        </div>
+    </footer>
+
+    <!-- Profile Modal -->
+    <div class="profile-modal" id="profileModal">
+        <div class="profile-modal-content">
+            <div class="profile-modal-header">
+                <h2 id="profileModalTitle">Profil</h2>
+                <button class="profile-modal-close" onclick="closeProfileModal()">&times;</button>
+            </div>
+            <div class="profile-modal-body" id="profileModalBody">
+                <!-- Content will be loaded here -->
+            </div>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+    <script src="cart.js"></script>
+    <script src="auth.js"></script>
+    <script src="profile.js"></script>
+</body>
+</html>
+

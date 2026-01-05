@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>İletişim - Glow & Beauty</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;500;600;700&family=Cormorant+Garamond:wght@400;500;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <!-- Hamburger Menu -->
+    <button class="hamburger-menu" id="hamburgerMenu">
+        <span></span>
+        <span></span>
+        <span></span>
+    </button>
+
+    <!-- Sidebar Menu -->
+    <div class="sidebar-menu" id="sidebarMenu">
+        <div class="sidebar-header">
+            <h2>Glow & Beauty</h2>
+            <button class="close-menu" id="closeMenu">&times;</button>
+        </div>
+        <nav class="sidebar-nav">
+            <a href="index.html" data-tr="Anasayfa" data-en="Home">Anasayfa</a>
+            <a href="kategoriler.html" data-tr="Kategoriler" data-en="Categories">Kategoriler</a>
+            <a href="hakkimizda.html" data-tr="Hakkımızda" data-en="About">Hakkımızda</a>
+            <a href="iletisim.html" data-tr="İletişim" data-en="Contact">İletişim</a>
+        </nav>
+    </div>
+
+    <!-- Header -->
+    <header class="header">
+        <nav class="navbar">
+            <div class="container">
+                <div class="logo">
+                    <a href="index.html">
+                        <h1>Glow & Beauty</h1>
+                    </a>
+                </div>
+                <div class="nav-right">
+                    <div class="language-selector">
+                        <button class="lang-icon-btn" id="langIcon">🌐</button>
+                        <div class="lang-dropdown" id="langDropdown">
+                            <button class="lang-option active" data-lang="tr">TR</button>
+                            <button class="lang-option" data-lang="en">EN</button>
+                        </div>
+                    </div>
+                    <div class="cart-icon-wrapper">
+                        <button class="cart-icon" id="cartIcon">
+                            <span class="cart-count" id="cartCount">0</span>
+                        </button>
+                    </div>
+                    <div class="profile-wrapper">
+                        <button class="membership-icon" id="profileIcon">👩</button>
+                        <div class="profile-dropdown" id="profileDropdown">
+                            <div id="profileMenuNotLoggedIn" style="display: none;">
+                                <a href="uyelik.html" class="profile-menu-item">Giriş Yap</a>
+                            </div>
+                            <div id="profileMenuLoggedIn" style="display: none;">
+                                <a href="#" class="profile-menu-item" onclick="showProfileModal('settings')">Profil Ayarları</a>
+                                <a href="#" class="profile-menu-item" onclick="showProfileModal('contact')">İletişim</a>
+                                <a href="#" class="profile-menu-item" onclick="showProfileModal('preferences')">Tercihler</a>
+                                <a href="#" class="profile-menu-item" onclick="showProfileModal('shipping')">Kargodaki Ürünler</a>
+                                <a href="#" class="profile-menu-item" onclick="showProfileModal('returns')">İade Ürünler</a>
+                                <a href="#" class="profile-menu-item" onclick="logout()">Çıkış Yap</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </nav>
+    </header>
+
+    <!-- Cart Sidebar -->
+    <div class="cart-sidebar" id="cartSidebar">
+        <div class="cart-header">
+            <h3 data-tr="Sepetim" data-en="My Cart">Sepetim</h3>
+            <button class="close-cart" id="closeCart">&times;</button>
+        </div>
+        <div class="cart-items" id="cartItems">
+            <div class="empty-cart" data-tr="Sepetiniz boş" data-en="Your cart is empty">Sepetiniz boş</div>
+        </div>
+        <div class="cart-footer">
+            <div class="cart-total">
+                <span data-tr="Toplam" data-en="Total">Toplam:</span>
+                <span class="total-price" id="cartTotal">₺0,00</span>
+            </div>
+            <button class="checkout-btn" data-tr="Ödeme Yap" data-en="Checkout">Ödeme Yap</button>
+        </div>
+    </div>
+
+    <!-- Contact Section -->
+    <section class="contact">
+        <div class="container">
+            <h2 class="section-title" data-tr="İletişim" data-en="Contact">İletişim</h2>
+            <div class="contact-content">
+                <div class="contact-grid">
+                    <div class="contact-info">
+                        <div class="contact-item">
+                            <h4 data-tr="Adres" data-en="Address">Adres</h4>
+                            <p>Nişantaşı Mahallesi, Teşvikiye Caddesi No:123<br>Şişli, İstanbul, Türkiye</p>
+                        </div>
+                        <div class="contact-item">
+                            <h4 data-tr="E-posta" data-en="Email">E-posta</h4>
+                            <p>info@rosevia.com<br>destek@rosevia.com</p>
+                        </div>
+                        <div class="contact-item">
+                            <h4 data-tr="Telefon" data-en="Phone">Telefon</h4>
+                            <p>+90 (212) 123 45 67<br>+90 (212) 123 45 68</p>
+                        </div>
+                        <div class="contact-item">
+                            <h4 data-tr="Çalışma Saatleri" data-en="Working Hours">Çalışma Saatleri</h4>
+                            <p data-tr="Pazartesi - Cuma: 09:00 - 18:00<br>Cumartesi: 10:00 - 16:00<br>Pazar: Kapalı" data-en="Monday - Friday: 09:00 - 18:00<br>Saturday: 10:00 - 16:00<br>Sunday: Closed">Pazartesi - Cuma: 09:00 - 18:00<br>Cumartesi: 10:00 - 16:00<br>Pazar: Kapalı</p>
+                        </div>
+                    </div>
+                    <div class="contact-form-section">
+                        <h3 data-tr="Bize Ulaşın" data-en="Get in Touch">Bize Ulaşın</h3>
+                        <p data-tr="Sorularınız, önerileriniz veya şikayetleriniz için bizimle iletişime geçebilirsiniz." data-en="You can contact us for your questions, suggestions or complaints.">Sorularınız, önerileriniz veya şikayetleriniz için bizimle iletişime geçebilirsiniz.</p>
+                        <div class="contact-methods">
+                            <div class="contact-method">
+                                <h4 data-tr="Müşteri Hizmetleri" data-en="Customer Service">Müşteri Hizmetleri</h4>
+                                <p data-tr="7/24 müşteri desteği için bize ulaşabilirsiniz" data-en="You can reach us for 24/7 customer support">7/24 müşteri desteği için bize ulaşabilirsiniz</p>
+                            </div>
+                            <div class="contact-method">
+                                <h4 data-tr="Sosyal Medya" data-en="Social Media">Sosyal Medya</h4>
+                                <p data-tr="Instagram, Facebook ve Twitter'dan bizi takip edin" data-en="Follow us on Instagram, Facebook and Twitter">Instagram, Facebook ve Twitter'dan bizi takip edin</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <p data-tr="&copy; 2024 Glow & Beauty. Tüm hakları saklıdır." data-en="&copy; 2024 Glow & Beauty. All rights reserved.">&copy; 2024 Glow & Beauty. Tüm hakları saklıdır.</p>
+        </div>
+    </footer>
+
+    <!-- Profile Modal -->
+    <div class="profile-modal" id="profileModal">
+        <div class="profile-modal-content">
+            <div class="profile-modal-header">
+                <h2 id="profileModalTitle">Profil</h2>
+                <button class="profile-modal-close" onclick="closeProfileModal()">&times;</button>
+            </div>
+            <div class="profile-modal-body" id="profileModalBody">
+                <!-- Content will be loaded here -->
+            </div>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+    <script src="cart.js"></script>
+    <script src="profile.js"></script>
+</body>
+</html>
+

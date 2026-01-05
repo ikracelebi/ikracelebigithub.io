@@ -1,0 +1,195 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Glow & Beauty - Makyaj Malzemeleri</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;500;600;700&family=Cormorant+Garamond:wght@400;500;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <!-- Splash Screen -->
+    <div class="splash-screen" id="splashScreen">
+        <div class="splash-logo">Glow & Beauty</div>
+        <!-- Glitter Effect on Splash -->
+        <div class="glitter-container" id="splashGlitterContainer"></div>
+    </div>
+
+    <!-- Glitter Effect on Main Page -->
+    <div class="glitter-container" id="glitterContainer"></div>
+
+    <!-- Hamburger Menu -->
+    <button class="hamburger-menu" id="hamburgerMenu">
+        <span></span>
+        <span></span>
+        <span></span>
+    </button>
+
+    <!-- Sidebar Menu -->
+    <div class="sidebar-menu" id="sidebarMenu">
+        <div class="sidebar-header">
+            <h2>Glow & Beauty</h2>
+            <button class="close-menu" id="closeMenu">&times;</button>
+        </div>
+        <nav class="sidebar-nav">
+            <a href="index.html" data-tr="Anasayfa" data-en="Home">Anasayfa</a>
+            <a href="kategoriler.html" data-tr="Kategoriler" data-en="Categories">Kategoriler</a>
+            <a href="hakkimizda.html" data-tr="Hakkımızda" data-en="About">Hakkımızda</a>
+            <a href="iletisim.html" data-tr="İletişim" data-en="Contact">İletişim</a>
+        </nav>
+    </div>
+
+    <!-- Header -->
+    <header class="header">
+        <nav class="navbar">
+            <div class="container">
+                <div class="logo">
+                    <a href="index.html">
+                        <h1>Glow & Beauty</h1>
+                    </a>
+                </div>
+                <div class="nav-right">
+                    <div class="language-selector">
+                        <button class="lang-icon-btn" id="langIcon">🌐</button>
+                        <div class="lang-dropdown" id="langDropdown">
+                            <button class="lang-option active" data-lang="tr">TR</button>
+                            <button class="lang-option" data-lang="en">EN</button>
+                        </div>
+                    </div>
+                    <div class="cart-icon-wrapper">
+                        <button class="cart-icon" id="cartIcon">
+                            <span class="cart-count" id="cartCount">0</span>
+                        </button>
+                    </div>
+                    <div class="profile-wrapper">
+                        <button class="membership-icon" id="profileIcon">👩</button>
+                        <div class="profile-dropdown" id="profileDropdown">
+                            <div id="profileMenuNotLoggedIn" style="display: none;">
+                                <a href="uyelik.html" class="profile-menu-item">Giriş Yap</a>
+                            </div>
+                            <div id="profileMenuLoggedIn" style="display: none;">
+                                <a href="#" class="profile-menu-item" onclick="showProfileModal('settings')">Profil Ayarları</a>
+                                <a href="#" class="profile-menu-item" onclick="showProfileModal('contact')">İletişim</a>
+                                <a href="#" class="profile-menu-item" onclick="showProfileModal('preferences')">Tercihler</a>
+                                <a href="#" class="profile-menu-item" onclick="showProfileModal('shipping')">Kargodaki Ürünler</a>
+                                <a href="#" class="profile-menu-item" onclick="showProfileModal('returns')">İade Ürünler</a>
+                                <a href="#" class="profile-menu-item" onclick="logout()">Çıkış Yap</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </nav>
+    </header>
+
+    <!-- Cart Sidebar -->
+    <div class="cart-sidebar" id="cartSidebar">
+        <div class="cart-header">
+            <h3 data-tr="Sepetim" data-en="My Cart">Sepetim</h3>
+            <button class="close-cart" id="closeCart">&times;</button>
+        </div>
+        <div class="cart-items" id="cartItems">
+            <div class="empty-cart" data-tr="Sepetiniz boş" data-en="Your cart is empty">Sepetiniz boş</div>
+        </div>
+        <div class="cart-footer">
+            <div class="cart-total">
+                <span data-tr="Toplam" data-en="Total">Toplam:</span>
+                <span class="total-price" id="cartTotal">₺0,00</span>
+            </div>
+            <button class="checkout-btn" data-tr="Ödeme Yap" data-en="Checkout">Ödeme Yap</button>
+        </div>
+    </div>
+
+    <!-- Hero Section -->
+    <section class="hero">
+        <div class="hero-content">
+            <h2 class="hero-title" data-tr="Doğal Güzelliğinizi Keşfedin" data-en="Discover Your Natural Beauty">Doğal Güzelliğinizi Keşfedin</h2>
+            <p class="hero-subtitle" data-tr="Glow & Beauty ile kendinizi özel hissedin" data-en="Feel special with Glow & Beauty">Glow & Beauty ile kendinizi özel hissedin</p>
+            <a href="kategoriler.html" class="btn-primary" data-tr="Ürünleri Keşfet" data-en="Explore Products">Ürünleri Keşfet</a>
+        </div>
+    </section>
+
+    <!-- Featured Products Section -->
+    <section class="featured-products">
+        <div class="container">
+            <h2 class="section-title" data-tr="Öne Çıkan Ürünler" data-en="Featured Products">Öne Çıkan Ürünler</h2>
+            <div class="product-grid">
+                <div class="product-card">
+                    <div class="product-image" style="background-image: url('https://picsum.photos/400/400?random=101'); background-size: cover; background-position: center;"></div>
+                    <div class="product-info">
+                        <h3 data-tr="Mat Ruj Koleksiyonu" data-en="Matte Lipstick Collection">Mat Ruj Koleksiyonu</h3>
+                        <p class="product-desc" data-tr="Uzun süre kalıcı, mat finish" data-en="Long-lasting, matte finish">Uzun süre kalıcı, mat finish</p>
+                        <span class="product-price">₺149,90</span>
+                    </div>
+                </div>
+                <div class="product-card">
+                    <div class="product-image" style="background-image: url('https://picsum.photos/400/400?random=102'); background-size: cover; background-position: center;"></div>
+                    <div class="product-info">
+                        <h3 data-tr="Premium Maskara" data-en="Premium Mascara">Premium Maskara</h3>
+                        <p class="product-desc" data-tr="Kirpikleri uzatan formül" data-en="Lash-lengthening formula">Kirpikleri uzatan formül</p>
+                        <span class="product-price">₺89,90</span>
+                    </div>
+                </div>
+                <div class="product-card">
+                    <div class="product-image" style="background-image: url('https://picsum.photos/400/400?random=103'); background-size: cover; background-position: center;"></div>
+                    <div class="product-info">
+                        <h3 data-tr="Doğal Fondöten" data-en="Natural Foundation">Doğal Fondöten</h3>
+                        <p class="product-desc" data-tr="Hafif ve doğal görünüm" data-en="Light and natural look">Hafif ve doğal görünüm</p>
+                        <span class="product-price">₺179,90</span>
+                    </div>
+                </div>
+                <div class="product-card">
+                    <div class="product-image" style="background-image: url('https://picsum.photos/400/400?random=104'); background-size: cover; background-position: center;"></div>
+                    <div class="product-info">
+                        <h3 data-tr="Göz Paleti" data-en="Eye Palette">Göz Paleti</h3>
+                        <p class="product-desc" data-tr="12 renkli premium palet" data-en="12-color premium palette">12 renkli premium palet</p>
+                        <span class="product-price">₺249,90</span>
+                    </div>
+                </div>
+                <div class="product-card">
+                    <div class="product-image" style="background-image: url('https://picsum.photos/400/400?random=105'); background-size: cover; background-position: center;"></div>
+                    <div class="product-info">
+                        <h3 data-tr="Allık Seti" data-en="Blush Set">Allık Seti</h3>
+                        <p class="product-desc" data-tr="Doğal görünümlü allık" data-en="Natural-looking blush">Doğal görünümlü allık</p>
+                        <span class="product-price">₺119,90</span>
+                    </div>
+                </div>
+                <div class="product-card">
+                    <div class="product-image" style="background-image: url('https://picsum.photos/400/400?random=106'); background-size: cover; background-position: center;"></div>
+                    <div class="product-info">
+                        <h3 data-tr="Göz Kalemi" data-en="Eyeliner">Göz Kalemi</h3>
+                        <p class="product-desc" data-tr="Su geçirmez formül" data-en="Waterproof formula">Su geçirmez formül</p>
+                        <span class="product-price">₺69,90</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <p data-tr="&copy; 2024 Glow & Beauty. Tüm hakları saklıdır." data-en="&copy; 2024 Glow & Beauty. All rights reserved.">&copy; 2024 Glow & Beauty. Tüm hakları saklıdır.</p>
+        </div>
+    </footer>
+
+    <!-- Profile Modal -->
+    <div class="profile-modal" id="profileModal">
+        <div class="profile-modal-content">
+            <div class="profile-modal-header">
+                <h2 id="profileModalTitle">Profil</h2>
+                <button class="profile-modal-close" onclick="closeProfileModal()">&times;</button>
+            </div>
+            <div class="profile-modal-body" id="profileModalBody">
+                <!-- Content will be loaded here -->
+            </div>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+    <script src="cart.js"></script>
+    <script src="profile.js"></script>
+</body>
+</html>

@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Hakkımızda - Glow & Beauty</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;500;600;700&family=Cormorant+Garamond:wght@400;500;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <!-- Hamburger Menu -->
+    <button class="hamburger-menu" id="hamburgerMenu">
+        <span></span>
+        <span></span>
+        <span></span>
+    </button>
+
+    <!-- Sidebar Menu -->
+    <div class="sidebar-menu" id="sidebarMenu">
+        <div class="sidebar-header">
+            <h2>Glow & Beauty</h2>
+            <button class="close-menu" id="closeMenu">&times;</button>
+        </div>
+        <nav class="sidebar-nav">
+            <a href="index.html" data-tr="Anasayfa" data-en="Home">Anasayfa</a>
+            <a href="kategoriler.html" data-tr="Kategoriler" data-en="Categories">Kategoriler</a>
+            <a href="hakkimizda.html" data-tr="Hakkımızda" data-en="About">Hakkımızda</a>
+            <a href="iletisim.html" data-tr="İletişim" data-en="Contact">İletişim</a>
+        </nav>
+    </div>
+
+    <!-- Header -->
+    <header class="header">
+        <nav class="navbar">
+            <div class="container">
+                <div class="logo">
+                    <a href="index.html">
+                        <h1>Glow & Beauty</h1>
+                    </a>
+                </div>
+                <div class="nav-right">
+                    <div class="language-selector">
+                        <button class="lang-icon-btn" id="langIcon">🌐</button>
+                        <div class="lang-dropdown" id="langDropdown">
+                            <button class="lang-option active" data-lang="tr">TR</button>
+                            <button class="lang-option" data-lang="en">EN</button>
+                        </div>
+                    </div>
+                    <div class="cart-icon-wrapper">
+                        <button class="cart-icon" id="cartIcon">
+                            <span class="cart-count" id="cartCount">0</span>
+                        </button>
+                    </div>
+                    <div class="profile-wrapper">
+                        <button class="membership-icon" id="profileIcon">👩</button>
+                        <div class="profile-dropdown" id="profileDropdown">
+                            <div id="profileMenuNotLoggedIn" style="display: none;">
+                                <a href="uyelik.html" class="profile-menu-item">Giriş Yap</a>
+                            </div>
+                            <div id="profileMenuLoggedIn" style="display: none;">
+                                <a href="#" class="profile-menu-item" onclick="showProfileModal('settings')">Profil Ayarları</a>
+                                <a href="#" class="profile-menu-item" onclick="showProfileModal('contact')">İletişim</a>
+                                <a href="#" class="profile-menu-item" onclick="showProfileModal('preferences')">Tercihler</a>
+                                <a href="#" class="profile-menu-item" onclick="showProfileModal('shipping')">Kargodaki Ürünler</a>
+                                <a href="#" class="profile-menu-item" onclick="showProfileModal('returns')">İade Ürünler</a>
+                                <a href="#" class="profile-menu-item" onclick="logout()">Çıkış Yap</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </nav>
+    </header>
+
+    <!-- Cart Sidebar -->
+    <div class="cart-sidebar" id="cartSidebar">
+        <div class="cart-header">
+            <h3 data-tr="Sepetim" data-en="My Cart">Sepetim</h3>
+            <button class="close-cart" id="closeCart">&times;</button>
+        </div>
+        <div class="cart-items" id="cartItems">
+            <div class="empty-cart" data-tr="Sepetiniz boş" data-en="Your cart is empty">Sepetiniz boş</div>
+        </div>
+        <div class="cart-footer">
+            <div class="cart-total">
+                <span data-tr="Toplam" data-en="Total">Toplam:</span>
+                <span class="total-price" id="cartTotal">₺0,00</span>
+            </div>
+            <button class="checkout-btn" data-tr="Ödeme Yap" data-en="Checkout">Ödeme Yap</button>
+        </div>
+    </div>
+
+    <!-- About Section -->
+    <section class="about">
+        <div class="container">
+            <div class="about-content">
+                <h2 class="section-title" data-tr="Hakkımızda" data-en="About Us">Hakkımızda</h2>
+                <div class="about-main">
+                    <div class="about-text-section">
+                        <p class="about-text" data-tr="Glow & Beauty, 2015 yılında kurulmuş, doğal ve kaliteli makyaj malzemeleri sunan öncü bir markadır. Müşterilerimize en iyi ürünleri sunmak ve güzelliklerini öne çıkarmak için sürekli çalışıyoruz. Tüm ürünlerimiz dermatolojik testlerden geçmiş, cilt dostu formüllere sahiptir." data-en="Glow & Beauty, founded in 2015, is a leading brand offering natural and quality makeup products. We continuously work to provide our customers with the best products and highlight their beauty. All our products have passed dermatological tests and have skin-friendly formulas.">
+                            Glow & Beauty, 2015 yılında kurulmuş, doğal ve kaliteli makyaj malzemeleri sunan öncü bir markadır. 
+                            Müşterilerimize en iyi ürünleri sunmak ve güzelliklerini öne çıkarmak için sürekli çalışıyoruz. 
+                            Tüm ürünlerimiz dermatolojik testlerden geçmiş, cilt dostu formüllere sahiptir.
+                        </p>
+                        <p class="about-text" data-tr="Vizyonumuz, her kadının kendini özel ve güzel hissetmesini sağlamaktır. Ürünlerimizde kullanılan doğal içerikler sayesinde, hem güzel görünmenizi hem de cildinizin sağlığını korumanızı hedefliyoruz. Geniş renk paletimiz ile her ten rengine uygun seçenekler sunuyoruz." data-en="Our vision is to make every woman feel special and beautiful. Thanks to the natural ingredients used in our products, we aim to both make you look beautiful and protect your skin's health. We offer options suitable for every skin tone with our wide color palette.">
+                            Vizyonumuz, her kadının kendini özel ve güzel hissetmesini sağlamaktır. 
+                            Ürünlerimizde kullanılan doğal içerikler sayesinde, hem güzel görünmenizi hem de cildinizin sağlığını korumanızı hedefliyoruz. 
+                            Geniş renk paletimiz ile her ten rengine uygun seçenekler sunuyoruz.
+                        </p>
+                    </div>
+                    <div class="features">
+                        <div class="feature">
+                            <h4>✓ <span data-tr="Doğal İçerikler" data-en="Natural Ingredients">Doğal İçerikler</span></h4>
+                            <p data-tr="Ürünlerimiz doğal ve organik içeriklerden oluşur, cildinize zarar vermez" data-en="Our products consist of natural and organic ingredients, do not harm your skin">Ürünlerimiz doğal ve organik içeriklerden oluşur, cildinize zarar vermez</p>
+                        </div>
+                        <div class="feature">
+                            <h4>✓ <span data-tr="Kaliteli Formül" data-en="Quality Formula">Kaliteli Formül</span></h4>
+                            <p data-tr="Dermatolojik testlerden geçmiş güvenli ürünler, uzun süre kalıcı formüller" data-en="Safe products that have passed dermatological tests, long-lasting formulas">Dermatolojik testlerden geçmiş güvenli ürünler, uzun süre kalıcı formüller</p>
+                        </div>
+                        <div class="feature">
+                            <h4>✓ <span data-tr="Geniş Renk Paleti" data-en="Wide Color Palette">Geniş Renk Paleti</span></h4>
+                            <p data-tr="Her ten rengine uygun çeşitli seçenekler mevcuttur" data-en="Various options suitable for every skin tone">Her ten rengine uygun çeşitli seçenekler mevcuttur</p>
+                        </div>
+                        <div class="feature">
+                            <h4>✓ <span data-tr="Uygun Fiyat" data-en="Affordable Price">Uygun Fiyat</span></h4>
+                            <p data-tr="Kaliteli ürünleri uygun fiyatlarla sunuyoruz, herkesin erişebileceği fiyatlar" data-en="We offer quality products at affordable prices, prices accessible to everyone">Kaliteli ürünleri uygun fiyatlarla sunuyoruz, herkesin erişebileceği fiyatlar</p>
+                        </div>
+                        <div class="feature">
+                            <h4>✓ <span data-tr="Hızlı Teslimat" data-en="Fast Delivery">Hızlı Teslimat</span></h4>
+                            <p data-tr="Türkiye genelinde hızlı ve güvenli teslimat, 24 saat içinde kargoya verilir" data-en="Fast and secure delivery throughout Turkey, shipped within 24 hours">Türkiye genelinde hızlı ve güvenli teslimat, 24 saat içinde kargoya verilir</p>
+                        </div>
+                        <div class="feature">
+                            <h4>✓ <span data-tr="Müşteri Memnuniyeti" data-en="Customer Satisfaction">Müşteri Memnuniyeti</span></h4>
+                            <p data-tr="7/24 müşteri desteği, 30 gün iade garantisi, memnuniyet odaklı hizmet" data-en="24/7 customer support, 30-day return guarantee, satisfaction-oriented service">7/24 müşteri desteği, 30 gün iade garantisi, memnuniyet odaklı hizmet</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <p data-tr="&copy; 2024 Glow & Beauty. Tüm hakları saklıdır." data-en="&copy; 2024 Glow & Beauty. All rights reserved.">&copy; 2024 Glow & Beauty. Tüm hakları saklıdır.</p>
+        </div>
+    </footer>
+
+    <!-- Profile Modal -->
+    <div class="profile-modal" id="profileModal">
+        <div class="profile-modal-content">
+            <div class="profile-modal-header">
+                <h2 id="profileModalTitle">Profil</h2>
+                <button class="profile-modal-close" onclick="closeProfileModal()">&times;</button>
+            </div>
+            <div class="profile-modal-body" id="profileModalBody">
+                <!-- Content will be loaded here -->
+            </div>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+    <script src="cart.js"></script>
+    <script src="profile.js"></script>
+</body>
+</html>
+

@@ -1,0 +1,175 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Kategoriler - Glow & Beauty</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;500;600;700&family=Cormorant+Garamond:wght@400;500;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <!-- Hamburger Menu -->
+    <button class="hamburger-menu" id="hamburgerMenu">
+        <span></span>
+        <span></span>
+        <span></span>
+    </button>
+
+    <!-- Sidebar Menu -->
+    <div class="sidebar-menu" id="sidebarMenu">
+        <div class="sidebar-header">
+            <h2>Glow & Beauty</h2>
+            <button class="close-menu" id="closeMenu">&times;</button>
+        </div>
+        <nav class="sidebar-nav">
+            <a href="index.html" data-tr="Anasayfa" data-en="Home">Anasayfa</a>
+            <a href="kategoriler.html" data-tr="Kategoriler" data-en="Categories">Kategoriler</a>
+            <a href="hakkimizda.html" data-tr="Hakkımızda" data-en="About">Hakkımızda</a>
+            <a href="iletisim.html" data-tr="İletişim" data-en="Contact">İletişim</a>
+        </nav>
+    </div>
+
+    <!-- Header -->
+    <header class="header">
+        <nav class="navbar">
+            <div class="container">
+                <div class="logo">
+                    <a href="index.html">
+                        <h1>Glow & Beauty</h1>
+                    </a>
+                </div>
+                <div class="nav-right">
+                    <div class="language-selector">
+                        <button class="lang-icon-btn" id="langIcon">🌐</button>
+                        <div class="lang-dropdown" id="langDropdown">
+                            <button class="lang-option active" data-lang="tr">TR</button>
+                            <button class="lang-option" data-lang="en">EN</button>
+                        </div>
+                    </div>
+                    <div class="cart-icon-wrapper">
+                        <button class="cart-icon" id="cartIcon">
+                            <span class="cart-count" id="cartCount">0</span>
+                        </button>
+                    </div>
+                    <div class="profile-wrapper">
+                        <button class="membership-icon" id="profileIcon">👩</button>
+                        <div class="profile-dropdown" id="profileDropdown">
+                            <div id="profileMenuNotLoggedIn" style="display: none;">
+                                <a href="uyelik.html" class="profile-menu-item">Giriş Yap</a>
+                            </div>
+                            <div id="profileMenuLoggedIn" style="display: none;">
+                                <a href="#" class="profile-menu-item" onclick="showProfileModal('settings')">Profil Ayarları</a>
+                                <a href="#" class="profile-menu-item" onclick="showProfileModal('contact')">İletişim</a>
+                                <a href="#" class="profile-menu-item" onclick="showProfileModal('preferences')">Tercihler</a>
+                                <a href="#" class="profile-menu-item" onclick="showProfileModal('shipping')">Kargodaki Ürünler</a>
+                                <a href="#" class="profile-menu-item" onclick="showProfileModal('returns')">İade Ürünler</a>
+                                <a href="#" class="profile-menu-item" onclick="logout()">Çıkış Yap</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </nav>
+    </header>
+
+    <!-- Cart Sidebar -->
+    <div class="cart-sidebar" id="cartSidebar">
+        <div class="cart-header">
+            <h3 data-tr="Sepetim" data-en="My Cart">Sepetim</h3>
+            <button class="close-cart" id="closeCart">&times;</button>
+        </div>
+        <div class="cart-items" id="cartItems">
+            <div class="empty-cart" data-tr="Sepetiniz boş" data-en="Your cart is empty">Sepetiniz boş</div>
+        </div>
+        <div class="cart-footer">
+            <div class="cart-total">
+                <span data-tr="Toplam" data-en="Total">Toplam:</span>
+                <span class="total-price" id="cartTotal">₺0,00</span>
+            </div>
+            <button class="checkout-btn" data-tr="Ödeme Yap" data-en="Checkout">Ödeme Yap</button>
+        </div>
+    </div>
+
+    <!-- Categories Page -->
+    <section class="categories-page">
+        <div class="container-full">
+            <h2 class="section-title" data-tr="Tüm Ürünler" data-en="All Products">Tüm Ürünler</h2>
+            
+            <!-- Filter Bar (Top) -->
+            <div class="filter-bar-top">
+                <div class="filter-bar-categories">
+                    <span class="filter-label" data-tr="Kategori:" data-en="Category:">Kategori:</span>
+                    <div class="filter-buttons">
+                        <button class="filter-btn active" data-category="all" data-tr="Tümü" data-en="All">Tümü</button>
+                        <button class="filter-btn" data-category="ruj" data-tr="Rujlar" data-en="Lipsticks">Rujlar</button>
+                        <button class="filter-btn" data-category="goz" data-tr="Göz Makyajı" data-en="Eye Makeup">Göz Makyajı</button>
+                        <button class="filter-btn" data-category="bakim" data-tr="Bakım" data-en="Care">Bakım</button>
+                        <button class="filter-btn" data-category="allik" data-tr="Allık" data-en="Blush">Allık</button>
+                        <button class="filter-btn" data-category="fondoten" data-tr="Fondöten" data-en="Foundation">Fondöten</button>
+                        <button class="filter-btn" data-category="maskara" data-tr="Maskara" data-en="Mascara">Maskara</button>
+                        <button class="filter-btn" data-category="palet" data-tr="Palet" data-en="Palette">Palet</button>
+                        <button class="filter-btn" data-category="kapatıcı" data-tr="Kapatıcı" data-en="Concealer">Kapatıcı</button>
+                        <button class="filter-btn" data-category="highlighter" data-tr="Highlighter" data-en="Highlighter">Highlighter</button>
+                    </div>
+                </div>
+                <div class="filter-bar-price">
+                    <span class="filter-label" data-tr="Fiyat:" data-en="Price:">Fiyat:</span>
+                    <div class="filter-buttons">
+                        <button class="filter-btn" data-price="0-100" data-tr="₺0 - ₺100" data-en="₺0 - ₺100">₺0 - ₺100</button>
+                        <button class="filter-btn" data-price="100-200" data-tr="₺100 - ₺200" data-en="₺100 - ₺200">₺100 - ₺200</button>
+                        <button class="filter-btn" data-price="200-300" data-tr="₺200 - ₺300" data-en="₺200 - ₺300">₺200 - ₺300</button>
+                        <button class="filter-btn" data-price="300+" data-tr="₺300+" data-en="₺300+">₺300+</button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Products Area -->
+            <div class="products-content-area">
+                <div class="products-header">
+                    <p data-tr="<span id='productCount'>0</span> ürün bulundu" data-en="<span id='productCount'>0</span> products found"><span id="productCount">0</span> ürün bulundu</p>
+                    <div class="products-controls">
+                        <select class="sort-select" id="sortSelect">
+                            <option value="default" data-tr="Varsayılan" data-en="Default">Varsayılan</option>
+                            <option value="price-low" data-tr="Fiyat: Düşükten Yükseğe" data-en="Price: Low to High">Fiyat: Düşükten Yükseğe</option>
+                            <option value="price-high" data-tr="Fiyat: Yüksekten Düşüğe" data-en="Price: High to Low">Fiyat: Yüksekten Düşüğe</option>
+                            <option value="name-asc" data-tr="İsim: A-Z" data-en="Name: A-Z">İsim: A-Z</option>
+                            <option value="name-desc" data-tr="İsim: Z-A" data-en="Name: Z-A">İsim: Z-A</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="products-grid-detailed" id="productsGrid">
+                    <!-- Products will be loaded here by JavaScript -->
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <p data-tr="&copy; 2024 Glow & Beauty. Tüm hakları saklıdır." data-en="&copy; 2024 Glow & Beauty. All rights reserved.">&copy; 2024 Glow & Beauty. Tüm hakları saklıdır.</p>
+        </div>
+    </footer>
+
+    <!-- Profile Modal -->
+    <div class="profile-modal" id="profileModal">
+        <div class="profile-modal-content">
+            <div class="profile-modal-header">
+                <h2 id="profileModalTitle">Profil</h2>
+                <button class="profile-modal-close" onclick="closeProfileModal()">&times;</button>
+            </div>
+            <div class="profile-modal-body" id="profileModalBody">
+                <!-- Content will be loaded here -->
+            </div>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+    <script src="cart.js"></script>
+    <script src="products.js"></script>
+    <script src="profile.js"></script>
+</body>
+</html>
+
